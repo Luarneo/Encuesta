@@ -1,0 +1,987 @@
+﻿@model Encuesta.Models.EncuestaViewModel
+
+@*@model IEnumerable<KeyValuePair<int, string>>*@
+
+
+@{
+    ViewBag.Title = "NuevaEncuesta";
+}
+
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+
+    <div id="secciondatos">
+
+        <h2 style="text-align:center;font-size:30px; font-family: Calibri">NUEVA ENCUESTA </h2>
+
+        <div class="row">
+            &nbsp;
+        </div>
+        <div class="row">
+            &nbsp;
+        </div>
+
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="row">
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-9">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-9">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AreaCampana, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.AreaCampana, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.AreaCampana, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-9">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Edad, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Edad, new { htmlAttributes = new { @class = "form-control", @type = "number", min = "18", max = "100" } })
+                        @Html.ValidationMessageFor(model => model.Edad, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-9">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Sexo, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.Sexo, new SelectList(ViewBag.generos, "Value", "Value"), "Selecciona una opción", new { @class = "form-control" })
+
+                        @Html.ValidationMessageFor(model => model.Sexo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            &nbsp;
+        </div>
+
+        <h3 class="text-center">Cuestionario para identificar los factores de riesgo psicosocial y evaluar el entorno organizacional en los centros de trabajo</h3>
+
+        <div class="row">
+            &nbsp;
+        </div>
+
+        <div class="row">
+            &nbsp;
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-5">
+
+            </div>
+            <div class="col-md-7">
+                <input type="button" class="btniniciarencuesta btn btn-info" value="Iniciar Encuesta" id="btninicio" />
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div id="seccion1">
+        <div class="row">
+            &nbsp;
+        </div>
+        <h4><u>Para responder las preguntas siguientes considere las condiciones ambientales de su centro de trabajo (dos últimos meses).</u></h4>
+        <div class="row">
+            &nbsp;
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Siempre </th>
+                    <th>Casi siempre </th>
+                    <th>Algunas veces</th>
+                    <th>Casi nunca</th>
+                    <th>Nunca </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (int i = 0; i < 5; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => modelItem.Respuestas[i].IdPregunta, new { @class = "control-label" }).&nbsp;
+
+                            @Html.DisplayFor(modelItem => modelItem.Respuestas[i].TextoPregunta, new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Siempre", new { @class = "control-label"})
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Casi Siempre", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Algunas veces", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Casi nunca", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Nunca", new { @class = "control-label" })
+                        </td>
+
+                    </tr>
+                    @Html.HiddenFor(modelItem => modelItem.Respuestas[i].IdPregunta)
+                }
+
+
+            </tbody>
+
+        </table>
+
+        <div class="row">
+            <input type="button" class="btn btn-info" value="Siguiente Sección" id="btntermina1" />
+        </div>
+
+    </div>
+
+    <div class="row">
+        &nbsp;
+    </div>
+
+    <div id="seccion2">
+
+        <div class="row">
+            &nbsp;
+        </div>
+
+
+        <h4><u> Para responder a las preguntas siguientes piense en la cantidad y ritmo de trabajo que tiene.</u></h4>
+        <div class="row">
+            &nbsp;
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Siempre </th>
+                    <th>Casi siempre </th>
+                    <th>Algunas veces</th>
+                    <th>Casi nunca</th>
+                    <th>Nunca </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (int i = 5; i < 8; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => modelItem.Respuestas[i].IdPregunta, new { @class = "control-label" }).&nbsp;
+                            @Html.DisplayFor(modelItem => modelItem.Respuestas[i].TextoPregunta, new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Siempre", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Casi Siempre", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Algunas veces", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Casi nunca", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Nunca", new { @class = "control-label" })
+                        </td>
+
+                    </tr>
+                    @Html.HiddenFor(modelItem => modelItem.Respuestas[i].IdPregunta)
+                }
+
+
+            </tbody>
+
+        </table>
+
+        <div class="row">
+            <input type="button" class="btn btn-info" value="Siguiente Sección" id="btntermina2" />
+        </div>
+
+    </div>
+
+    <div id="seccion3">
+        <div class="row">
+            &nbsp;
+        </div>
+
+        <h4><u>Las preguntas siguientes están relacionadas con el esfuerzo mental que le exige su trabajo</u></h4>
+        <div class="row">
+            &nbsp;
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Siempre </th>
+                    <th>Casi siempre </th>
+                    <th>Algunas veces</th>
+                    <th>Casi nunca</th>
+                    <th>Nunca </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (int i = 8; i < 12; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => modelItem.Respuestas[i].IdPregunta, new { @class = "control-label" }).&nbsp;
+                            @Html.DisplayFor(modelItem => modelItem.Respuestas[i].TextoPregunta, new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Siempre", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Casi Siempre", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Algunas veces", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Casi nunca", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Nunca", new { @class = "control-label" })
+                        </td>
+
+                    </tr>
+                    @Html.HiddenFor(modelItem => modelItem.Respuestas[i].IdPregunta)
+                }
+
+            </tbody>
+        </table>
+
+        <div class="row">
+            <input type="button" class="btn btn-info" value="Siguiente Sección" id="btntermina3" />
+        </div>
+    </div>
+
+    <div id="seccion4">
+        <div class="row">
+            &nbsp;
+        </div>
+
+        <h4><u>Las preguntas siguientes están relacionadas con las actividades que realiza en su trabajo y las responsabilidades que tiene:</u></h4>
+        <div class="row">
+            &nbsp;
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Siempre </th>
+                    <th>Casi siempre </th>
+                    <th>Algunas veces</th>
+                    <th>Casi nunca</th>
+                    <th>Nunca </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (int i = 12; i < 16; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => modelItem.Respuestas[i].IdPregunta, new { @class = "control-label" }).&nbsp;
+                            @Html.DisplayFor(modelItem => modelItem.Respuestas[i].TextoPregunta, new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Siempre", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Casi Siempre", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Algunas veces", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Casi nunca", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Nunca", new { @class = "control-label" })
+                        </td>
+
+                    </tr>
+                    @Html.HiddenFor(modelItem => modelItem.Respuestas[i].IdPregunta)
+                }
+
+            </tbody>
+        </table>
+        <div class="row">
+            <input type="button" class="btn btn-info" value="Siguiente Sección" id="btntermina4" />
+        </div>
+    </div>
+
+    <div id="seccion5">
+        <div class="row">
+            &nbsp;
+        </div>
+
+        <h4><u>Las preguntas siguientes están relacionadas con su jornada de trabajo.</u></h4>
+        <div class="row">
+            &nbsp;
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Siempre </th>
+                    <th>Casi siempre </th>
+                    <th>Algunas veces</th>
+                    <th>Casi nunca</th>
+                    <th>Nunca </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (int i = 16; i < 22; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => modelItem.Respuestas[i].IdPregunta, new { @class = "control-label" }).&nbsp;
+                            @Html.DisplayFor(modelItem => modelItem.Respuestas[i].TextoPregunta, new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Siempre", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Casi Siempre", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Algunas veces", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Casi nunca", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Nunca", new { @class = "control-label" })
+                        </td>
+
+                    </tr>
+                    @Html.HiddenFor(modelItem => modelItem.Respuestas[i].IdPregunta)
+                }
+
+            </tbody>
+        </table>
+        <div class="row">
+            <input type="button" class="btn btn-info" value="Siguiente Sección" id="btntermina5" />
+        </div>
+    </div>
+
+    <div id="seccion6">
+        <div class="row">
+            &nbsp;
+        </div>
+
+        <h4><u>Las preguntas siguientes están relacionadas con las decisiones que puede tomar en su trabajo.</u></h4>
+        <div class="row">
+            &nbsp;
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Siempre </th>
+                    <th>Casi siempre </th>
+                    <th>Algunas veces</th>
+                    <th>Casi nunca</th>
+                    <th>Nunca </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (int i = 22; i < 28; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => modelItem.Respuestas[i].IdPregunta, new { @class = "control-label" }).&nbsp;
+                            @Html.DisplayFor(modelItem => modelItem.Respuestas[i].TextoPregunta, new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Siempre", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Casi Siempre", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Algunas veces", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Casi nunca", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Nunca", new { @class = "control-label" })
+                        </td>
+
+                    </tr>
+                    @Html.HiddenFor(modelItem => modelItem.Respuestas[i].IdPregunta)
+                }
+
+            </tbody>
+        </table>
+        <div class="row">
+            <input type="button" class="btn btn-info" value="Siguiente Sección" id="btntermina6" />
+        </div>
+    </div>
+
+    <div id="seccion7">
+        <div class="row">
+            &nbsp;
+        </div>
+
+        <h4><u>Las preguntas siguientes están relacionadas con cualquier tipo de cambio que ocurra en su trabajo (considere los últimos cambios realizados).</u></h4>
+        <div class="row">
+            &nbsp;
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Siempre </th>
+                    <th>Casi siempre </th>
+                    <th>Algunas veces</th>
+                    <th>Casi nunca</th>
+                    <th>Nunca </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (int i = 28; i < 30; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => modelItem.Respuestas[i].IdPregunta, new { @class = "control-label" }).&nbsp;
+                            @Html.DisplayFor(modelItem => modelItem.Respuestas[i].TextoPregunta, new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Siempre", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Casi Siempre", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Algunas veces", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Casi nunca", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Nunca", new { @class = "control-label" })
+                        </td>
+
+                    </tr>
+                    @Html.HiddenFor(modelItem => modelItem.Respuestas[i].IdPregunta)
+                }
+
+            </tbody>
+        </table>
+        <div class="row">
+            <input type="button" class="btn btn-info" value="Siguiente Sección" id="btntermina7" />
+        </div>
+    </div>
+
+    <div id="seccion8">
+        <div class="row">
+            &nbsp;
+        </div>
+
+        <h4><u>Las preguntas siguientes están relacionadas con la capacitación e información que se le proporciona sobre su trabajo.</u></h4>
+        <div class="row">
+            &nbsp;
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Siempre </th>
+                    <th>Casi siempre </th>
+                    <th>Algunas veces</th>
+                    <th>Casi nunca</th>
+                    <th>Nunca </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (int i = 30; i < 36; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => modelItem.Respuestas[i].IdPregunta, new { @class = "control-label" }).&nbsp;
+                            @Html.DisplayFor(modelItem => modelItem.Respuestas[i].TextoPregunta, new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Siempre", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Casi Siempre", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Algunas veces", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Casi nunca", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Nunca", new { @class = "control-label" })
+                        </td>
+
+                    </tr>
+                    @Html.HiddenFor(modelItem => modelItem.Respuestas[i].IdPregunta)
+                }
+
+            </tbody>
+        </table>
+        <div class="row">
+            <input type="button" class="btn btn-info" value="Siguiente Sección" id="btntermina8" />
+        </div>
+    </div>
+
+    <div id="seccion9">
+        <div class="row">
+            &nbsp;
+        </div>
+
+        <h4><u>Las preguntas siguientes están relacionadas con el o los jefes con quien tiene contacto.</u></h4>
+        <div class="row">
+            &nbsp;
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Siempre </th>
+                    <th>Casi siempre </th>
+                    <th>Algunas veces</th>
+                    <th>Casi nunca</th>
+                    <th>Nunca </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (int i = 36; i < 41; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => modelItem.Respuestas[i].IdPregunta, new { @class = "control-label" }).&nbsp;
+                            @Html.DisplayFor(modelItem => modelItem.Respuestas[i].TextoPregunta, new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Siempre", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Casi Siempre", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Algunas veces", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Casi nunca", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Nunca", new { @class = "control-label" })
+                        </td>
+
+                    </tr>
+                    @Html.HiddenFor(modelItem => modelItem.Respuestas[i].IdPregunta)
+                }
+
+            </tbody>
+        </table>
+        <div class="row">
+            <input type="button" class="btn btn-info" value="Siguiente Sección" id="btntermina9" />
+        </div>
+    </div>
+
+    <div id="seccion10">
+        <div class="row">
+            &nbsp;
+        </div>
+
+        <h4><u>Las preguntas siguientes se refieren a las relaciones con sus compañeros.</u></h4>
+        <div class="row">
+            &nbsp;
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Siempre </th>
+                    <th>Casi siempre </th>
+                    <th>Algunas veces</th>
+                    <th>Casi nunca</th>
+                    <th>Nunca </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (int i = 41; i < 46; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => modelItem.Respuestas[i].IdPregunta, new { @class = "control-label" }).&nbsp;
+                            @Html.DisplayFor(modelItem => modelItem.Respuestas[i].TextoPregunta, new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Siempre", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Casi Siempre", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Algunas veces", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Casi nunca", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Nunca", new { @class = "control-label" })
+                        </td>
+
+                    </tr>
+                    @Html.HiddenFor(modelItem => modelItem.Respuestas[i].IdPregunta)
+                }
+
+            </tbody>
+        </table>
+        <div class="row">
+            <input type="button" class="btn btn-info" value="Siguiente Sección" id="btntermina10" />
+        </div>
+    </div>
+
+    <div id="seccion11">
+        <div class="row">
+            &nbsp;
+        </div>
+
+        <h4><u>Las preguntas siguientes están relacionadas con la información que recibe sobre su rendimiento en el trabajo, el reconocimiento, el sentido de pertenencia y la estabilidad que le ofrece su trabajo.</u></h4>
+        <div class="row">
+            &nbsp;
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Siempre </th>
+                    <th>Casi siempre </th>
+                    <th>Algunas veces</th>
+                    <th>Casi nunca</th>
+                    <th>Nunca </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (int i = 46; i < 56; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => modelItem.Respuestas[i].IdPregunta, new { @class = "control-label" }).&nbsp;
+                            @Html.DisplayFor(modelItem => modelItem.Respuestas[i].TextoPregunta, new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Siempre", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Casi Siempre", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Algunas veces", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Casi nunca", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Nunca", new { @class = "control-label" })
+                        </td>
+
+                    </tr>
+                    @Html.HiddenFor(modelItem => modelItem.Respuestas[i].IdPregunta)
+                }
+
+            </tbody>
+        </table>
+        <div class="row">
+            <input type="button" class="btn btn-info" value="Siguiente Sección" id="btntermina11" />
+        </div>
+    </div>
+
+    <div id="seccion12">
+        <div class="row">
+            &nbsp;
+        </div>
+
+        <h4><u>Las preguntas siguientes están relacionadas con actos de violencia laboral (malos tratos, acoso, hostigamiento, acoso psicológico).</u></h4>
+        <div class="row">
+            &nbsp;
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Siempre </th>
+                    <th>Casi siempre </th>
+                    <th>Algunas veces</th>
+                    <th>Casi nunca</th>
+                    <th>Nunca </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (int i = 56; i < 64; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => modelItem.Respuestas[i].IdPregunta, new { @class = "control-label" }).&nbsp;
+                            @Html.DisplayFor(modelItem => modelItem.Respuestas[i].TextoPregunta, new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Siempre", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Casi Siempre", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Algunas veces", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Casi nunca", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Nunca", new { @class = "control-label" })
+                        </td>
+
+                    </tr>
+                    @Html.HiddenFor(modelItem => modelItem.Respuestas[i].IdPregunta)
+                }
+
+            </tbody>
+        </table>
+        <div class="row">
+            <input type="button" class="btn btn-info" value="Siguiente Sección" id="btntermina12" />
+        </div>
+    </div>
+
+
+    <div id="antseccion13">
+        <div class="row">
+            &nbsp;
+        </div>
+
+        <h4>En mi trabajo debo brindar servicio a clientes o usuarios:</h4>
+        <input type="radio" name="respuestapreg1" value="si" id="respuestapreg1si"> Si &nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="radio" name="respuestapreg1" value="no" id="respuestapreg1no"> No
+
+        <div class="row">
+            &nbsp;
+        </div>
+
+        <div class="row">
+            <input type="button" class="btn btn-info" value="Continuar" id="btnterminaantseccion13" />
+        </div>
+    </div>
+
+
+    <div id="seccion13">
+        <div class="row">
+            &nbsp;
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Siempre </th>
+                    <th>Casi siempre </th>
+                    <th>Algunas veces</th>
+                    <th>Casi nunca</th>
+                    <th>Nunca </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (int i = 64; i < 68; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => modelItem.Respuestas[i].IdPregunta, new { @class = "control-label" }).&nbsp;
+                            @Html.DisplayFor(modelItem => modelItem.Respuestas[i].TextoPregunta, new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Siempre", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Casi Siempre", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Algunas veces", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Casi nunca", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Nunca", new { @class = "control-label" })
+                        </td>
+
+                    </tr>
+                    @Html.HiddenFor(modelItem => modelItem.Respuestas[i].IdPregunta)
+                }
+
+            </tbody>
+        </table>
+        <div class="row">
+            <input type="button" class="btn btn-info" value="Siguiente Sección" id="btntermina13" />
+        </div>
+    </div>
+
+
+    <div id="antseccion14">
+        <div class="row">
+            &nbsp;
+        </div>
+
+        <h4>Soy jefe de otros trabajadores:</h4>
+        <input type="radio" name="respuestapreg2" value="si" id="respuestapreg2si"> Si &nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="radio" name="respuestapreg2" value="no" id="respuestapreg2no"> No
+
+
+        <div class="row">
+            &nbsp;
+        </div>
+
+        <div class="row">
+            <input type="button" class="btn btn-info" value="Continuar" id="btnterminaantseccion14" />
+        </div>
+    </div>
+
+
+
+
+
+
+    <div id="seccion14">
+        <div class="row">
+            &nbsp;
+        </div>
+
+        <h4><u>Las preguntas siguientes están relacionadas con las actitudes de las personas que supervisa.</u></h4>
+        <div class="row">
+            &nbsp;
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Siempre </th>
+                    <th>Casi siempre </th>
+                    <th>Algunas veces</th>
+                    <th>Casi nunca</th>
+                    <th>Nunca </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (int i = 68; i < 72; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => modelItem.Respuestas[i].IdPregunta, new { @class = "control-label" }).&nbsp;
+                            @Html.DisplayFor(modelItem => modelItem.Respuestas[i].TextoPregunta, new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Siempre", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Casi Siempre", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Algunas veces", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Casi nunca", new { @class = "control-label" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(modelItem => modelItem.Respuestas[i].Respuesta, "Nunca", new { @class = "control-label" })
+                        </td>
+
+                    </tr>
+                    @Html.HiddenFor(modelItem => modelItem.Respuestas[i].IdPregunta)
+                }
+
+            </tbody>
+        </table>
+        <div class="row">
+            <input type="button" class="btn btn-info" value="Siguiente Sección" id="btntermina14" />
+        </div>
+    </div>
+
+    <div id="mensfinal">
+        <h4>¡Encuesta Finalizada!</h4>
+    </div>
+
+    <div class="row">
+        &nbsp;
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-6">
+            <input type="submit" value="Guardar Encuesta" class="btn btn-success" />
+        </div>
+    </div>
+</div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/JSEncuesta.js"></script>
+
+}
